@@ -81,11 +81,11 @@ def main():
         baseurl = os.getenv('INPUT_API_URL')  # Try old parameter name
         
     if not baseurl:
-        raise ValueError("No base URL provided. Please set the 'base-url' input parameter.")
+        raise ValueError("No base URL provided. Please set the 'baseurl' input parameter.")
 
     api_token = os.getenv('INPUT_API_TOKEN')
     if not api_token:
-        raise ValueError("No API token provided. Please set the 'api-token' input parameter.")
+        raise ValueError("No API token provided. Please set the 'api_token' input parameter.")
         
     box_id = os.getenv('INPUT_BOX_ID')
     secret_id = os.getenv('INPUT_SECRET_ID')

@@ -21,11 +21,6 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Ensure Python 3 is installed
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y python3 python3-pip
-
     - name: Fetch secret from external vault
       id: fetch-secret
       uses: ./.github/actions/fetch_secret
