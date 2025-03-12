@@ -71,7 +71,7 @@ def main():
             print(f"{k}: {'*' * min(len(v), 8)}")
     
     # Hyphen to underscore conversion for environment variables
-    baseurl = os.getenv('INPUT_BASEURL')
+    baseurl = os.getenv('INPUT_BASE_URL')
     
     # Fallbacks and validation
     if not baseurl:
