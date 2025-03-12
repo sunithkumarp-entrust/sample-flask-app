@@ -28,7 +28,7 @@ jobs:
 
     - name: Fetch secret from external vault
       id: fetch-secret
-      uses: ./.github/actions/fetch_secret
+      uses: .github/actions/fetch_secret
       with:
         base-url: ${{ secrets.BASE_URL }}
         api-token: ${{ secrets.API_TOKEN }}
