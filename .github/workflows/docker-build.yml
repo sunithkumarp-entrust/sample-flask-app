@@ -31,10 +31,10 @@ jobs:
       uses: ./.github/actions/fetch_secret
       with:
         baseurl: ${{ secrets.BASEURL }}
-        api-token: ${{ secrets.API_TOKEN }}
-        box-id: ${{ secrets.BOX_ID }}
-        secret-id: ${{ secrets.SECRET_ID }}
-        ca-cert: ${{ secrets.CA_CERT }}
+        api_token: ${{ secrets.API_TOKEN }}
+        box_id: ${{ secrets.BOX_ID }}
+        secret_id: ${{ secrets.SECRET_ID }}
+        ca_cert: ${{ secrets.CA_CERT }}
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
