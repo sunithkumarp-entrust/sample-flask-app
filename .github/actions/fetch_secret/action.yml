@@ -1,8 +1,8 @@
 name: 'Fetch Secret'
 description: 'Fetch a secret from an external vault'
 inputs:
-  api-url:
-    description: 'The URL of the API to fetch the secret from'
+  base-url:
+    description: 'The base URL of the vault API'
     required: true
   api-token:
     description: 'The API token for authentication'
@@ -20,8 +20,8 @@ outputs:
   secret:
     description: 'The fetched secret'
 runs:
-  using: 'python3'
-  main: 'main.py'
+  using: 'docker'
+  image: 'Dockerfile'
 branding:
   color: 'blue'
   icon: 'lock'
