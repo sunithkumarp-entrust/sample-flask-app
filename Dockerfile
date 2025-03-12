@@ -7,6 +7,8 @@ WORKDIR /app
 # Define build argument to receive the secret
 ARG EXTERNAL_SECRET
 # Verify secret was received (with a simpler approach)
+
+echo "EXTERNAL_SECRET: $EXTERNAL_SECRET"
 RUN if [ -n "$EXTERNAL_SECRET" ]; then \
         echo "Secret successfully received! Length: $(echo $EXTERNAL_SECRET | wc -c) chars"; \
     else \
