@@ -48,5 +48,5 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
-        build-args: 
-          EXTERNAL_SECRET: ${{ steps.fetch-secret.outputs.secret }}
+        build-args: |
+          EXTERNAL_SECRET=${{ steps.fetch-secret.outputs.secret }}
