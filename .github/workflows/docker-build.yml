@@ -30,6 +30,11 @@ jobs:
         box_id: ${{ secrets.BOX_ID }}
         secret_id: ${{ secrets.SECRET_ID }}
         ca_cert: ${{ secrets.CA_CERT }}
+        
+    - name: Verify secret was fetched
+      run: |
+        echo "Secret output exists: ${{ steps.fetch-secret.outputs.secret != '' }}"
+        # Don't print the actual secret value for security reasons
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
