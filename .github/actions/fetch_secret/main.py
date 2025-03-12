@@ -6,6 +6,12 @@ import tempfile
 # Define API endpoint constant
 CHECKOUT_SECRET_API = "/vault/1.0/CheckoutSecret/"
 
+def mask_secret(secret):
+    """Mask a secret, showing only the last 2 characters."""
+    if not secret or len(secret) < 3:
+        return "**"
+    return "*" * (len(secret) - 2) + secret[-2:]
+
 class VaultClient:
     def __init__(self, baseurl, api_token, ca_cert=None):
         self.baseurl = baseurl
@@ -93,7 +99,16 @@ def main():
     
     vault_client = VaultClient(baseurl, api_token, ca_cert)
     secret = vault_client.checkout_secret(box_id, secret_id)
-    print(f"name=secret::{secret}")
+    
+    # Log the masked secret
+    print(f"Secret retrieved: {mask_secret(secret)}")
+    
+    # Set output using the newer GITHUB_OUTPUT approach
+    if 'GITHUB_OUTPUT' in os.environ:
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+            f.write(f"secret={secret}\n")
+    else:
+        print(f"secret={secret}")
 
 if __name__ == "__main__":
     main()
