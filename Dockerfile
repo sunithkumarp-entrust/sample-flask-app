@@ -6,16 +6,9 @@ WORKDIR /app
 
 # Define build argument to receive the secret
 ARG EXTERNAL_SECRET
-# Verify secret was received (masked in the output for security)
+# Verify secret was received (with a simpler approach)
 RUN if [ -n "$EXTERNAL_SECRET" ]; then \
-        secret_len=${#EXTERNAL_SECRET}; \
-        if [ "$secret_len" -gt 2 ]; then \
-            masked=$(printf "%0.s*" $(seq 1 $((secret_len-2)))); \
-            last_two=${EXTERNAL_SECRET: -2}; \
-            echo "Secret successfully received! Value: $masked$last_two"; \
-        else \
-            echo "Secret successfully received! Value: **"; \
-        fi; \
+        echo "Secret successfully received! Length: $(echo $EXTERNAL_SECRET | wc -c) chars"; \
     else \
         echo "WARNING: No secret received"; \
     fi
