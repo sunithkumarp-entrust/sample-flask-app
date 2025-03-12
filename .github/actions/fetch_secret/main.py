@@ -93,7 +93,7 @@ def main():
     
     vault_client = VaultClient(baseurl, api_token, ca_cert)
     secret = vault_client.checkout_secret(box_id, secret_id)
-    print(f"::set-output name=secret::{secret}")
+    print(f"name=secret::{secret}")
 
 if __name__ == "__main__":
     main()
