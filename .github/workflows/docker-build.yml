@@ -30,7 +30,7 @@ jobs:
       id: fetch-secret
       uses: ./.github/actions/fetch_secret
       with:
-        base-url: ${{ secrets.BASEURL }}
+        baseurl: ${{ secrets.BASEURL }}
         api-token: ${{ secrets.API_TOKEN }}
         box-id: ${{ secrets.BOX_ID }}
         secret-id: ${{ secrets.SECRET_ID }}
