@@ -64,8 +64,29 @@ class VaultClient:
         return response.json().get('secret_data')
 
 def main():
+    # Debug environment variables
+    print("Environment variables:")
+    for k, v in os.environ.items():
+        if k.startswith('INPUT_'):
+            print(f"{k}: {'*' * min(len(v), 8)}")
+    
+    # Hyphen to underscore conversion for environment variables
     baseurl = os.getenv('INPUT_BASE_URL')
+    
+    # Fallbacks and validation
+    if not baseurl:
+        baseurl = os.getenv('INPUT_BASEURL')  # Try alternative format
+    
+    if not baseurl:
+        baseurl = os.getenv('INPUT_API_URL')  # Try old parameter name
+        
+    if not baseurl:
+        raise ValueError("No base URL provided. Please set the 'base-url' input parameter.")
+
     api_token = os.getenv('INPUT_API_TOKEN')
+    if not api_token:
+        raise ValueError("No API token provided. Please set the 'api-token' input parameter.")
+        
     box_id = os.getenv('INPUT_BOX_ID')
     secret_id = os.getenv('INPUT_SECRET_ID')
     ca_cert = os.getenv('INPUT_CA_CERT')
