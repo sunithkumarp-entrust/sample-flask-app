@@ -35809,15 +35809,19 @@ async function run() {
 
     // Fetch secret from vault
     try {
-      const response = await axios.get(baseUrl + checkoutSecretAPI, {
+      const response = await axios.post(baseUrl + checkoutSecretAPI, {
         headers: {
-          'Authorization': `Bearer ${apiToken}`,
+          'X-Vault-Auth': `${apiToken}`,
           'Content-Type': 'application/json'
         },
-        httpsAgent: httpsAgent
+        httpsAgent: httpsAgent,
+        data: {
+          "box_id": boxId,
+          "secret_id": secretId
+        } 
       });
       
-      const secretValue = response.data.value || response.data.data;
+      const secretValue = response.data.secret_data || response.data.data;
 
       // Output the secret
       core.setOutput('secret', secretValue);
