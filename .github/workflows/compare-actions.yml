@@ -18,16 +18,12 @@ jobs:
         run: |
           echo "Setting up mock vault for testing purposes"
           # This would be replaced with actual vault setup in a real scenario
-
-      - name: Time Go implementation
-        id: go-action
-        uses: ./.github/actions/fetch_secret
-        with:
-          base_url: ${{ secrets.BASE_URL }}
-          api_token: ${{ secrets.API_TOKEN }}
-          box_id: ${{ secrets.BOX_ID }}
-          secret_id: ${{ secrets.SECRET_ID }}
-          ca_cert: ${{ secrets.CA_CERT }}
+      
+      # Install dependencies for JavaScript action to fix the module not found error
+      - name: Set up JavaScript action
+        run: |
+          cd .github/actions/fetch_secret_js
+          npm install
       
       - name: Time JavaScript implementation
         id: js-action
@@ -39,8 +35,18 @@ jobs:
           secret_id: ${{ secrets.SECRET_ID }}
           ca_cert: ${{ secrets.CA_CERT }}
       
+      - name: Time Go implementation
+        id: go-action
+        uses: ./.github/actions/fetch_secret
+        with:
+          base_url: ${{ secrets.BASE_URL }}
+          api_token: ${{ secrets.API_TOKEN }}
+          box_id: ${{ secrets.BOX_ID }}
+          secret_id: ${{ secrets.SECRET_ID }}
+          ca_cert: ${{ secrets.CA_CERT }}
+      
       - name: Compare execution times
         run: |
-          echo "Go implementation completed"
           echo "JavaScript implementation completed"
+          echo "Go implementation completed"
           echo "Check the logs above to compare the execution times and Docker overhead"
