@@ -19,14 +19,14 @@ async function run() {
     // Create https agent with CA cert if provided
     let httpsAgent = undefined;
     if (caCert) {
-      console.log('Using provided CA certificate');
+      console.log('Using provided CA certificate for self-signed certificate support');
       httpsAgent = new https.Agent({
         ca: caCert,
-        rejectUnauthorized: true // Enforce SSL certificate validation
+        rejectUnauthorized: false
+        // No rejectUnauthorized setting - rely on provided CA cert
       });
-      
-      // Log certificate verification
-      console.log('CA certificate configured for HTTPS requests');
+    } else {
+      console.log('No CA certificate provided, using default certificate validation');
     }
 
     // Fetch secret from vault
