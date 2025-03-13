@@ -1,0 +1,46 @@
+name: Compare Action Implementations
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'actions/**'
+      - '.github/workflows/compare-actions.yml'
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up mock vault for testing
+        run: |
+          echo "Setting up mock vault for testing purposes"
+          # This would be replaced with actual vault setup in a real scenario
+
+      - name: Time Go implementation
+        id: go-action
+        uses: ./.github/actions/fetch_secret
+        with:
+          baseurl: ${{ secrets.VAULT_BASE_URL }}
+          api_token: ${{ secrets.VAULT_API_TOKEN }}
+          box_id: ${{ secrets.VAULT_BOX_ID }}
+          secret_id: ${{ secrets.VAULT_SECRET_ID }}
+          ca_cert: ${{ secrets.VAULT_CA_CERT }}
+      
+      - name: Time JavaScript implementation
+        id: js-action
+        uses: ./actions/fetch_secret_js
+        with:
+          baseurl: ${{ secrets.VAULT_BASE_URL }}
+          api_token: ${{ secrets.VAULT_API_TOKEN }}
+          box_id: ${{ secrets.VAULT_BOX_ID }}
+          secret_id: ${{ secrets.VAULT_SECRET_ID }}
+          ca_cert: ${{ secrets.VAULT_CA_CERT }}
+      
+      - name: Compare execution times
+        run: |
+          echo "Go implementation completed"
+          echo "JavaScript implementation completed"
+          echo "Check the logs above to compare the execution times and Docker overhead"
