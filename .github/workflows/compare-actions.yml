@@ -19,13 +19,6 @@ jobs:
           echo "Setting up mock vault for testing purposes"
           # This would be replaced with actual vault setup in a real scenario
       
-      # Build the JavaScript action 
-      - name: Build JavaScript action
-        run: |
-          cd .github/fetch_secret_js
-          npm install
-          npm run build
-      
       - name: Time JavaScript implementation
         id: js-action
         uses: ./.github/actions/fetch_secret_js
