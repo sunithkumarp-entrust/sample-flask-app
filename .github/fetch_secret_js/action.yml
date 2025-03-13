@@ -1,0 +1,24 @@
+name: 'Fetch Secret JS'
+description: 'JavaScript version of the action to fetch secrets from a vault'
+inputs:
+  base_url:
+    description: 'The base URL of the vault API'
+    required: true
+  api_token:
+    description: 'The API token for authentication'
+    required: true
+  box_id:
+    description: 'The box ID to fetch the secret from'
+    required: true
+  secret_id:
+    description: 'The secret ID to fetch'
+    required: true
+  ca_cert:
+    description: 'The CA certificate for SSL verification'
+    required: false
+outputs:
+  secret:
+    description: 'The fetched secret'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
