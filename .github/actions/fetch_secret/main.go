@@ -166,12 +166,7 @@ func main() {
 
 	// Get input parameters
 	baseURL := os.Getenv("INPUT_BASE_URL")
-	if baseURL == "" {
-		baseURL = os.Getenv("INPUT_BASE_URL")
-	}
-	if baseURL == "" {
-		baseURL = os.Getenv("INPUT_API_URL")
-	}
+
 	if baseURL == "" {
 		log.Fatal("No base URL provided. Please set the 'baseurl' input parameter.")
 	}
