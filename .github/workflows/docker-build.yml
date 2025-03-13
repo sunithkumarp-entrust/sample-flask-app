@@ -25,7 +25,7 @@ jobs:
       id: fetch-secret
       uses: ./.github/actions/fetch_secret
       with:
-        baseurl: ${{ secrets.BASEURL }}
+        base_url: ${{ secrets.BASE_URL }}
         api_token: ${{ secrets.API_TOKEN }}
         box_id: ${{ secrets.BOX_ID }}
         secret_id: ${{ secrets.SECRET_ID }}
