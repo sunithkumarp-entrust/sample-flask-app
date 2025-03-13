@@ -1,10 +1,14 @@
-FROM python:3.9-slim
+FROM golang:1.24.1-alpine AS builder
 
 WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY go.mod ./
+COPY main.go ./
 
-COPY . .
+RUN go build -o /vault-action
 
-ENTRYPOINT ["python", "/app/main.py"]
+FROM alpine:3.14
+
+COPY --from=builder /vault-action /vault-action
+
+ENTRYPOINT ["/vault-action"]
