@@ -23,21 +23,21 @@ jobs:
         id: go-action
         uses: ./.github/actions/fetch_secret
         with:
-          base_url: ${{ secrets.VAULT_BASE_URL }}
-          api_token: ${{ secrets.VAULT_API_TOKEN }}
-          box_id: ${{ secrets.VAULT_BOX_ID }}
-          secret_id: ${{ secrets.VAULT_SECRET_ID }}
-          ca_cert: ${{ secrets.VAULT_CA_CERT }}
+          base_url: ${{ secrets.BASE_URL }}
+          api_token: ${{ secrets.API_TOKEN }}
+          box_id: ${{ secrets.BOX_ID }}
+          secret_id: ${{ secrets.SECRET_ID }}
+          ca_cert: ${{ secrets.CA_CERT }}
       
       - name: Time JavaScript implementation
         id: js-action
         uses: ./actions/fetch_secret_js
         with:
-          base_url: ${{ secrets.VAULT_BASE_URL }}
-          api_token: ${{ secrets.VAULT_API_TOKEN }}
-          box_id: ${{ secrets.VAULT_BOX_ID }}
-          secret_id: ${{ secrets.VAULT_SECRET_ID }}
-          ca_cert: ${{ secrets.VAULT_CA_CERT }}
+          base_url: ${{ secrets.BASE_URL }}
+          api_token: ${{ secrets.API_TOKEN }}
+          box_id: ${{ secrets.BOX_ID }}
+          secret_id: ${{ secrets.SECRET_ID }}
+          ca_cert: ${{ secrets.CA_CERT }}
       
       - name: Compare execution times
         run: |
