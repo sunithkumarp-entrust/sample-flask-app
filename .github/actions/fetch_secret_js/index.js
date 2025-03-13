@@ -5,6 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
+const checkoutSecretAPI = "/vault/1.0/CheckoutSecret/"
+
 async function run() {
   let tempCertPath = null;
   
@@ -41,7 +43,7 @@ async function run() {
 
     // Fetch secret from vault
     try {
-      const response = await axios.get(`${baseUrl}/api/v1/secret/${boxId}/${secretId}`, {
+      const response = await axios.get(baseUrl + checkoutSecretAPI, {
         headers: {
           'Authorization': `Bearer ${apiToken}`,
           'Content-Type': 'application/json'
