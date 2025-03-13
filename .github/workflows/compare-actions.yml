@@ -31,7 +31,7 @@ jobs:
       
       - name: Time JavaScript implementation
         id: js-action
-        uses: ./actions/fetch_secret_js
+        uses: ./.github/actions/fetch_secret_js
         with:
           base_url: ${{ secrets.BASE_URL }}
           api_token: ${{ secrets.API_TOKEN }}
