@@ -35767,8 +35767,13 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const axios = __nccwpck_require__(8757);
 const https = __nccwpck_require__(5687);
+const fs = __nccwpck_require__(7147);
+const path = __nccwpck_require__(1017);
+const os = __nccwpck_require__(2037);
 
 async function run() {
+  let tempCertPath = null;
+  
   try {
     // Get inputs
     const baseUrl = core.getInput('base_url', { required: true });
@@ -35785,10 +35790,19 @@ async function run() {
     // Create https agent with CA cert if provided
     let httpsAgent = undefined;
     if (caCert) {
-      console.log('Using provided CA certificate');
+      console.log('Using provided CA certificate for self-signed certificate support');
+      
+      // Decode base64 certificate and write to temp file
+      const certBuffer = Buffer.from(caCert, 'base64');
+      tempCertPath = path.join(os.tmpdir(), `ca-cert-${Date.now()}.pem`);
+      fs.writeFileSync(tempCertPath, certBuffer);
+      console.log(`CA certificate written to temporary file: ${tempCertPath}`);
+      
       httpsAgent = new https.Agent({
-        ca: caCert
+        ca: fs.readFileSync(tempCertPath)
       });
+    } else {
+      console.log('No CA certificate provided, using default certificate validation');
     }
 
     // Fetch secret from vault
@@ -35813,6 +35827,16 @@ async function run() {
     }
   } catch (error) {
     core.setFailed(error.message);
+  } finally {
+    // Clean up temp file if it was created
+    if (tempCertPath && fs.existsSync(tempCertPath)) {
+      try {
+        fs.unlinkSync(tempCertPath);
+        console.log('Temporary CA certificate file cleaned up');
+      } catch (err) {
+        console.error(`Failed to clean up temporary certificate file: ${err.message}`);
+      }
+    }
   }
 }
 
