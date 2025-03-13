@@ -35809,19 +35809,36 @@ async function run() {
 
     // Fetch secret from vault
     try {
-      const response = await axios.post(baseUrl + checkoutSecretAPI, {
+      console.log(`Making API request to: ${baseUrl}${checkoutSecretAPI}`);
+      
+      const requestData = {
+        "box_id": boxId,
+        "secret_id": secretId
+      };
+      
+      const config = {
         headers: {
-          'X-Vault-Auth': `${apiToken}`,
+          'X-Vault-Auth': apiToken,
           'Content-Type': 'application/json'
         },
         httpsAgent: httpsAgent,
-        data: {
-          "box_id": boxId,
-          "secret_id": secretId
-        } 
-      });
+        timeout: 10000 // 10 second timeout
+      };
       
-      const secretValue = response.data.secret_data || response.data.data;
+      const response = await axios.post(
+        baseUrl + checkoutSecretAPI, 
+        requestData, 
+        config
+      );
+      
+      if (!response.data) {
+        throw new Error('Empty response received from API');
+      }
+      
+      const secretValue = response.data.secret_data;
+      if (!secretValue) {
+        throw new Error(`Secret data not found in response: ${JSON.stringify(response.data)}`);
+      }
 
       // Output the secret
       core.setOutput('secret', secretValue);
@@ -35829,6 +35846,16 @@ async function run() {
       const endTime = Date.now();
       console.log(`Secret fetched successfully in ${endTime - startTime}ms`);
     } catch (error) {
+      console.error(`API Error Details: ${error.message}`);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error(`Status: ${error.response.status}`);
+        console.error(`Response headers: ${JSON.stringify(error.response.headers)}`);
+        console.error(`Response data: ${JSON.stringify(error.response.data || {})}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received from server');
+      }
       throw new Error(`Failed to fetch secret: ${error.message}`);
     }
   } catch (error) {
