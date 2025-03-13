@@ -19,15 +19,16 @@ jobs:
           echo "Setting up mock vault for testing purposes"
           # This would be replaced with actual vault setup in a real scenario
       
-      # Install dependencies for JavaScript action to fix the module not found error
-      - name: Set up JavaScript action
+      # Build the JavaScript action 
+      - name: Build JavaScript action
         run: |
-          cd .github/actions/fetch_secret_js
+          cd .github/fetch_secret_js
           npm install
+          npm run build
       
       - name: Time JavaScript implementation
         id: js-action
-        uses: ./.github/actions/fetch_secret_js
+        uses: ./.github/fetch_secret_js
         with:
           base_url: ${{ secrets.BASE_URL }}
           api_token: ${{ secrets.API_TOKEN }}
