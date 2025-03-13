@@ -21,4 +21,4 @@ outputs:
     description: 'The fetched secret'
 runs:
   using: 'node20'
-  main: 'dist/index.js'
+  main: 'index.js'
