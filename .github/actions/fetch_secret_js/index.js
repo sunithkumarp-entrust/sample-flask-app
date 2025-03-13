@@ -45,7 +45,7 @@ async function run() {
     try {
       const response = await axios.get(baseUrl + checkoutSecretAPI, {
         headers: {
-          'Authorization': `Bearer ${apiToken}`,
+          'X-Vault-Auth': `${apiToken}`,
           'Content-Type': 'application/json'
         },
         httpsAgent: httpsAgent
