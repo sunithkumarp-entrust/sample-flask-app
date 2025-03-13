@@ -1,7 +1,7 @@
 name: 'Fetch Secret'
 description: 'Fetch a secret from an external vault'
 inputs:
-  baseurl:
+  base_url:
     description: 'The base URL of the vault API'
     required: true
   api_token:

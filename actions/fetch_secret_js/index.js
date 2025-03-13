@@ -5,7 +5,7 @@ const https = require('https');
 async function run() {
   try {
     // Get inputs
-    const baseUrl = core.getInput('baseurl', { required: true });
+    const baseUrl = core.getInput('base_url', { required: true });
     const apiToken = core.getInput('api_token', { required: true });
     const boxId = core.getInput('box_id', { required: true });
     const secretId = core.getInput('secret_id', { required: true });

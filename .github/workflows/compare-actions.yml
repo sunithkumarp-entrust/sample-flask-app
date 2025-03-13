@@ -23,7 +23,7 @@ jobs:
         id: go-action
         uses: ./.github/actions/fetch_secret
         with:
-          baseurl: ${{ secrets.VAULT_BASEURL }}
+          base_url: ${{ secrets.VAULT_BASE_URL }}
           api_token: ${{ secrets.VAULT_API_TOKEN }}
           box_id: ${{ secrets.VAULT_BOX_ID }}
           secret_id: ${{ secrets.VAULT_SECRET_ID }}
@@ -33,7 +33,7 @@ jobs:
         id: js-action
         uses: ./actions/fetch_secret_js
         with:
-          baseurl: ${{ secrets.VAULT_BASEURL }}
+          base_url: ${{ secrets.VAULT_BASE_URL }}
           api_token: ${{ secrets.VAULT_API_TOKEN }}
           box_id: ${{ secrets.VAULT_BOX_ID }}
           secret_id: ${{ secrets.VAULT_SECRET_ID }}

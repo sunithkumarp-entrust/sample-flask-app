@@ -1,7 +1,7 @@
 name: 'Fetch Secret JS'
 description: 'JavaScript version of the action to fetch secrets from a vault'
 inputs:
-  baseurl:
+  base_url:
     description: 'The base URL of the vault API'
     required: true
   api_token:
