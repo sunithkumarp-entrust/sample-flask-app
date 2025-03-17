@@ -1,4 +1,4 @@
-name: Test PASM Vault Action
+name: Test PASM Vault Action Token Auth
 
 on:
   workflow_dispatch:  # Allow manual trigger
