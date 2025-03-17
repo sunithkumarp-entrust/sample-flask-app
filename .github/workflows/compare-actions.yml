@@ -25,7 +25,7 @@ jobs:
       
       - name: Time JavaScript implementation
         id: js-action
-        uses: ./.github/actions/fetch_secret_js
+        uses: sunithkumarp-entrust/demo-pasm-vault-action@main
         with:
           base_url: ${{ secrets.BASE_URL }}
           api_token: ${{ secrets.API_TOKEN }}
