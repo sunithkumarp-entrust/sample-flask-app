@@ -51,13 +51,7 @@ jobs:
         if: steps.fetch-secret.outcome == 'success'
         run: |
           echo "Secret was successfully retrieved: ${{ steps.fetch-secret.outputs.secret != '' }}"
-          
-      - name: Compare with token authentication
-        if: steps.fetch-secret.outcome == 'success'
-        run: |
-          echo "This workflow uses username/password authentication instead of token authentication"
-          echo "Check workflow logs to compare performance and reliability differences"
-          
+
       - name: Display the secret (for testing only)
         if: steps.fetch-secret.outputs.secret != '' && steps.fetch-secret.outcome == 'success'
         run: |
