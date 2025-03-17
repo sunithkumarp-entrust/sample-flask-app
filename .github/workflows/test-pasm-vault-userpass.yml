@@ -44,6 +44,7 @@ jobs:
             echo "Make sure VAULT_USERNAME and VAULT_PASSWORD secrets are configured correctly."
             echo "Verify that these secrets are set in the repository settings (not in CodeSpaces)."
             echo "Path: Repository Settings > Secrets and variables > Actions"
+            exit 1
           fi
           
       - name: Verify secret was retrieved
