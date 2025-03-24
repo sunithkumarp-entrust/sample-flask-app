@@ -32,9 +32,10 @@ jobs:
           username: ${{ secrets.VAULT_USERNAME }}
           password: ${{ secrets.VAULT_PASSWORD }}
           vault_uid: ${{ secrets.VAULT_UID }}
-          box_id: ${{ secrets.BOX_ID }}
-          secret_id: ${{ secrets.SECRET_ID }}
           ca_cert: ${{ secrets.CA_CERT }}
+          secrets: |
+            secret.env.Box1.accessKey | AWS_ACCESS_KEY_ID;
+            secret.file.Box1.privateKey | /tmp/private_key.pem;
         continue-on-error: true
         
       - name: Check Authentication Status
@@ -56,6 +57,14 @@ jobs:
         if: steps.fetch-secret.outputs.secret != '' && steps.fetch-secret.outcome == 'success'
         run: |
           # Display the actual secret for testing purposes
-          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs.secret }}"
-          SECRET_LENGTH=$(echo "${{ steps.fetch-secret.outputs.secret }}" | wc -c)
-          echo "Secret length: $SECRET_LENGTH characters"
+          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}"
+          SECRET_LENGTH_1=$(echo "${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_1 characters"
+
+          echo "Retrieved env value: ${{ env.AWS_ACCESS_KEY_ID }}"
+          SECRET_LENGTH_ENV=$(echo "${{ env.AWS_ACCESS_KEY_ID }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_ENV characters"
+
+          # echo "Retrieved secret value: ${{ steps.fetch-secret.outputs./tmp/private_key.pem }}"
+          # SECRET_LENGTH_2=$(echo "${{ steps.fetch-secret.outputs./tmp/private_key.pem }}" | wc -c)
+          # echo "Secret length: $SECRET_LENGTH_2 characters"
