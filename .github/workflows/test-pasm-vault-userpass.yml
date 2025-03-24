@@ -77,4 +77,5 @@ jobs:
 
           touch secrets.json
           echo '${{ toJson(steps.import-secrets.outputs) }}' >> secrets.json
+          sleep 2
           cat secrets.json
