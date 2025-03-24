@@ -57,25 +57,25 @@ jobs:
       - name: Display the secret (for testing only)
         if: steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID != '' && steps.fetch-secret.outcome == 'success'
         run: |
-          # # Display the actual secret for testing purposes
-          # echo "Retrieved secret value: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}"
-          # SECRET_LENGTH_1=$(echo "${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}" | wc -c)
-          # echo "Secret length: $SECRET_LENGTH_1 characters"
+          # Display the actual secret for testing purposes
+          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}"
+          SECRET_LENGTH_1=$(echo "${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_1 characters"
 
-          # echo "Retrieved env value: ${{ env.AWS_ACCESS_KEY_ID }}"
-          # SECRET_LENGTH_ENV=$(echo "${{ env.AWS_ACCESS_KEY_ID }}" | wc -c)
-          # echo "Secret length: $SECRET_LENGTH_ENV characters"
+          echo "Retrieved env value: ${{ env.AWS_ACCESS_KEY_ID }}"
+          SECRET_LENGTH_ENV=$(echo "${{ env.AWS_ACCESS_KEY_ID }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_ENV characters"
 
 
-          # echo "Retrieved kv secret value: ${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}"
-          # SECRET_LENGTH_KV_OUT=$(echo "${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}" | wc -c)
-          # echo "Secret length: $SECRET_LENGTH_KV_OUT characters"
+          echo "Retrieved kv secret value: ${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}"
+          SECRET_LENGTH_KV_OUT=$(echo "${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_KV_OUT characters"
 
-          # echo "Retrieved kv env value: ${{ env.SIMPLE_KV_SECRET }}"
-          # SECRET_LENGTH_KV_ENV=$(echo "${{ env.SIMPLE_KV_SECRET }}" | wc -c)
-          # echo "Secret length: $SECRET_LENGTH_KV_ENV characters"
+          echo "Retrieved kv env value: ${{ env.SIMPLE_KV_SECRET }}"
+          SECRET_LENGTH_KV_ENV=$(echo "${{ env.SIMPLE_KV_SECRET }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_KV_ENV characters"
 
           touch secrets.json
-          echo '${{ toJson(steps.import-secrets.outputs) }}' >> secrets.json
+          echo '${{ toJson(steps.fetch-secret.outputs) }}' >> secrets.json
           sleep 2
           cat secrets.json
