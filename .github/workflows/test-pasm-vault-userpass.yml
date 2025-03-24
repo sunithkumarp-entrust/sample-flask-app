@@ -74,3 +74,7 @@ jobs:
           echo "Retrieved kv env value: ${{ env.SIMPLE_KV_SECRET }}"
           SECRET_LENGTH_KV_ENV=$(echo "${{ env.SIMPLE_KV_SECRET }}" | wc -c)
           echo "Secret length: $SECRET_LENGTH_KV_ENV characters"
+
+          touch secrets.json
+          echo '${{ toJson(steps.import-secrets.outputs) }}' >> secrets.json
+          cat secrets.json
