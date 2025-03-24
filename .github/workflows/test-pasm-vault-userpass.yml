@@ -51,10 +51,10 @@ jobs:
       - name: Verify secret was retrieved
         if: steps.fetch-secret.outcome == 'success'
         run: |
-          echo "Secret was successfully retrieved: ${{ steps.fetch-secret.outputs.secret != '' }}"
+          echo "Secret was successfully retrieved: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID != '' }}"
 
       - name: Display the secret (for testing only)
-        if: steps.fetch-secret.outputs.secret != '' && steps.fetch-secret.outcome == 'success'
+        if: steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID != '' && steps.fetch-secret.outcome == 'success'
         run: |
           # Display the actual secret for testing purposes
           echo "Retrieved secret value: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}"
