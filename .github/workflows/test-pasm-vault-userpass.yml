@@ -68,7 +68,7 @@ jobs:
 
 
           echo "Retrieved kv secret value: ${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}"
-          SECRET_LENGTH_KV_OUT =$(echo "${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}" | wc -c)
+          SECRET_LENGTH_KV_OUT=$(echo "${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}" | wc -c)
           echo "Secret length: $SECRET_LENGTH_KV_OUT characters"
 
           echo "Retrieved kv env value: ${{ env.SIMPLE_KV_SECRET }}"
