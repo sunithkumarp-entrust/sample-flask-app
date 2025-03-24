@@ -64,3 +64,11 @@ jobs:
           echo "Retrieved env value: ${{ env.AWS_ACCESS_KEY_ID }}"
           SECRET_LENGTH_ENV=$(echo "${{ env.AWS_ACCESS_KEY_ID }}" | wc -c)
           echo "Secret length: $SECRET_LENGTH_ENV characters"
+
+          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs./tmp/private_key\.pem }}"
+          SECRET_LENGTH_3=$(echo "${{ steps.fetch-secret.outputs./tmp/private_key\.pem }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_3 characters"
+
+          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs./tmp/private_key.pem }}"
+          SECRET_LENGTH_4=$(echo "${{ steps.fetch-secret.outputs./tmp/private_key.pem }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_4 characters"
