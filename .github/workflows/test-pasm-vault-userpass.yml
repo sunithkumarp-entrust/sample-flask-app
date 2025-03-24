@@ -35,7 +35,8 @@ jobs:
           ca_cert: ${{ secrets.CA_CERT }}
           secrets: |
             secret.env.Box1.accessKey | AWS_ACCESS_KEY_ID;
-            secret.file.Box1.privateKey | /tmp/private_key.pem;
+            secret.env.Box1.SimpleKVSecret | SIMPLE_KV_SECRET;
+            # secret.file.Box1.privateKey | /tmp/private_key.pem;
         continue-on-error: true
         
       - name: Check Authentication Status
@@ -65,10 +66,11 @@ jobs:
           SECRET_LENGTH_ENV=$(echo "${{ env.AWS_ACCESS_KEY_ID }}" | wc -c)
           echo "Secret length: $SECRET_LENGTH_ENV characters"
 
-          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs./tmp/private_key\.pem }}"
-          SECRET_LENGTH_3=$(echo "${{ steps.fetch-secret.outputs./tmp/private_key\.pem }}" | wc -c)
-          echo "Secret length: $SECRET_LENGTH_3 characters"
 
-          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs./tmp/private_key.pem }}"
-          SECRET_LENGTH_4=$(echo "${{ steps.fetch-secret.outputs./tmp/private_key.pem }}" | wc -c)
-          echo "Secret length: $SECRET_LENGTH_4 characters"
+          echo "Retrieved kv secret value: ${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}"
+          SECRET_LENGTH_KV_OUT =$(echo "${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_KV_OUT characters"
+
+          echo "Retrieved kv env value: ${{ env.SIMPLE_KV_SECRET }}"
+          SECRET_LENGTH_KV_ENV=$(echo "${{ env.SIMPLE_KV_SECRET }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH_KV_ENV characters"
