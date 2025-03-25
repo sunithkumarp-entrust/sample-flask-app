@@ -75,3 +75,11 @@ jobs:
 
           echo "Read the file mounted secret - /tmp/private_key.pem"
           cat /tmp/private_key.pem
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
+          build-args: |
+            EXTERNAL_SECRET=${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}
