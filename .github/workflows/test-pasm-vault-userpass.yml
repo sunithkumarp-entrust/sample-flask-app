@@ -38,7 +38,7 @@ jobs:
             secret.env.Box1.SimpleKVSecret | SIMPLE_KV_SECRET;
             secret.env.Box1.ExampleTextSecret | EXAMPLE_TEXT_SECRET;
             secret.env.Box2.StripeKey | STRIPE_KEY;
-            # secret.file.Box1.privateKey | /tmp/private_key.pem;
+            secret.file.Box1.privateKey | /tmp/private_key.pem;
         continue-on-error: true
         
       - name: Check Authentication Status
@@ -60,24 +60,18 @@ jobs:
         if: steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID != '' && steps.fetch-secret.outcome == 'success'
         run: |
           # Display the actual secret for testing purposes
-          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}"
-          SECRET_LENGTH_1=$(echo "${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}" | wc -c)
-          echo "Secret length: $SECRET_LENGTH_1 characters"
+          echo "Read Secrets using outputs - AWS_ACCESS_KEY_ID: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}"
 
-          echo "Retrieved env value: ${{ env.AWS_ACCESS_KEY_ID }}"
-          SECRET_LENGTH_ENV=$(echo "${{ env.AWS_ACCESS_KEY_ID }}" | wc -c)
-          echo "Secret length: $SECRET_LENGTH_ENV characters"
+          echo "Read Secrets using environment variable - AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}"
 
+          echo "Retrieved kv secret value using outputs - SIMPLE_KV_SECRET: ${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}"
 
-          echo "Retrieved kv secret value: ${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}"
-          SECRET_LENGTH_KV_OUT=$(echo "${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}" | wc -c)
-          echo "Secret length: $SECRET_LENGTH_KV_OUT characters"
-
-          echo "Retrieved kv env value: ${{ env.SIMPLE_KV_SECRET }}"
-          SECRET_LENGTH_KV_ENV=$(echo "${{ env.SIMPLE_KV_SECRET }}" | wc -c)
-          echo "Secret length: $SECRET_LENGTH_KV_ENV characters"
+          echo "Retrieved kv env value using env vars SIMPLE_KV_SECRET: ${{ env.SIMPLE_KV_SECRET }}"
 
           touch secrets.json
           echo '${{ toJson(steps.fetch-secret.outputs) }}' >> secrets.json
           sleep 2
           cat secrets.json
+
+          echo "Read the file mounted secret - /tmp/private_key.pem"
+          cat /tmp/private_key.pem
