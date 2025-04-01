@@ -38,7 +38,7 @@ jobs:
             secret.env.Box1.SimpleKVSecret | SIMPLE_KV_SECRET;
             secret.env.Box1.ExampleTextSecret | EXAMPLE_TEXT_SECRET;
             secret.env.Box2.StripeKey | STRIPE_KEY;
-            secret.file.Box1.privateKey | /tmp/private_key.pem;
+            secret.file.Box1.privateKey | /tmp/private_key.pem
         continue-on-error: true
         
       - name: Check Authentication Status
