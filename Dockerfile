@@ -16,6 +16,7 @@ RUN if [ -n "$EXTERNAL_SECRET" ]; then \
     fi
 
 # Copy the requirements file into the container
+COPY src .
 COPY requirements.txt .
 
 # Install the dependencies
