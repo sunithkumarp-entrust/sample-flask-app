@@ -1,4 +1,3 @@
-
 on:
   workflow_dispatch:  # Allow manual trigger
   push:
@@ -10,20 +9,36 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write  # Required for OIDC token
+      contents: read
     
     steps:
-      - name: Get Secret
-        id: get-secret
+      - name: Get OIDC Token
+        id: get-token
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const core = require('@actions/core')
+            const { getIDToken } = require('@actions/auth')
+            const token = await getIDToken()
+            core.setSecret(token)
+            core.setOutput('token', token)
+      
+      - name: Get Secret with Token
         run: |
-          TOKEN_RESPONSE=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN" \
-                 "${ACTIONS_ID_TOKEN_REQUEST_URL}")
-          echo $TOKEN_RESPONSE
-          TOKEN = $(echo $TOKEN_RESPONSE | jq -r '.value')
+          echo "Got OIDC token successfully"
+          
+          # Use the token from the previous step
+          TOKEN="${{ steps.get-token.outputs.token }}"
+          echo "Token length: ${#TOKEN} characters"
+          
+          # Make request to your secrets server
           RESPONSE=$(curl -s -H "Authorization: Bearer $TOKEN" \
                    "http://34.234.78.151:5000/checkout?key=test_secret")
           
-          SECRET=$(echo $RESPONSE | jq -r '.value')
-          # echo "::add-mask::$SECRET"
-          # echo "secret=$SECRET" >> $GITHUB_OUTPUT
-          echo $RESPONSE
-          echo $SECRET
+          # Show response (but mask any sensitive data)
+          echo "Response from server:"
+          echo "$RESPONSE"
+          
+          # Extract and use the secret
+          SECRET=$(echo "$RESPONSE" | jq -r '.value')
+          echo "Secret value retrieved successfully"
