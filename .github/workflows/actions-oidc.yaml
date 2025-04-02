@@ -1,3 +1,10 @@
+
+on:
+  workflow_dispatch:  # Allow manual trigger
+  push:
+    branches:
+      - main
+      - master
 jobs:
   get-secrets:
     runs-on: ubuntu-latest
