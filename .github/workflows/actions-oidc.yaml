@@ -1,0 +1,19 @@
+jobs:
+  get-secrets:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Required for OIDC token
+    
+    steps:
+      - name: Get Secret
+        id: get-secret
+        run: |
+          TOKEN=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN" \
+                 "${ACTIONS_ID_TOKEN_REQUEST_URL}" | jq -r '.value')
+          
+          RESPONSE=$(curl -s -H "Authorization: Bearer $TOKEN" \
+                   "http://34.234.78.151/checkout?key=test_secret")
+          
+          SECRET=$(echo $RESPONSE | jq -r '.value')
+          echo "::add-mask::$SECRET"
+          echo "secret=$SECRET" >> $GITHUB_OUTPUT
