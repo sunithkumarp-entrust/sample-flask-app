@@ -22,6 +22,6 @@ jobs:
                    "http://34.234.78.151:5000/checkout?key=test_secret")
           
           SECRET=$(echo $RESPONSE | jq -r '.value')
-          echo "::add-mask::$SECRET"
-          echo "secret=$SECRET" >> $GITHUB_OUTPUT
-          echo $TOKEN
+          # echo "::add-mask::$SECRET"
+          # echo "secret=$SECRET" >> $GITHUB_OUTPUT
+          echo $SECRET
