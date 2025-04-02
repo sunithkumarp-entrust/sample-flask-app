@@ -15,9 +15,10 @@ jobs:
       - name: Get Secret
         id: get-secret
         run: |
-          TOKEN=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN" \
-                 "${ACTIONS_ID_TOKEN_REQUEST_URL}" | jq -r '.value')
-          
+          TOKEN_RESPONSE=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN" \
+                 "${ACTIONS_ID_TOKEN_REQUEST_URL}")
+          echo $TOKEN_RESPONSE
+          TOKEN = $(echo $TOKEN_RESPONSE | jq -r '.value')
           RESPONSE=$(curl -s -H "Authorization: Bearer $TOKEN" \
                    "http://34.234.78.151:5000/checkout?key=test_secret")
           
