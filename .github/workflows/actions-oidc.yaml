@@ -25,3 +25,4 @@ jobs:
           # echo "::add-mask::$SECRET"
           # echo "secret=$SECRET" >> $GITHUB_OUTPUT
           echo $RESPONSE
+          echo $SECRET
