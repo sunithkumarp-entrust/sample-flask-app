@@ -34,12 +34,12 @@ jobs:
           vault_uid: ${{ secrets.VAULT_UID }}
           ca_cert: ${{ secrets.CA_CERT }}
           secrets: |
-            secret.Box1.accessKey | AWS_ACCESS_KEY_ID;
-            secret.Box1.SimpleKVSecret | SIMPLE_KV_SECRET;
-            secret.Box1.ExampleTextSecret | EXAMPLE_TEXT_SECRET;
-            secret.Box2.StripeKey | STRIPE_KEY;
-            secret.Box1.DOCKER_USERNAME | DOCKER_USERNAME;
-            secret.Box1.DOCKER_PASSWORD | DOCKER_PASSWORD;
+            Box1.accessKey | AWS_ACCESS_KEY_ID;
+            Box1.SimpleKVSecret | SIMPLE_KV_SECRET;
+            Box1.ExampleTextSecret | EXAMPLE_TEXT_SECRET;
+            Box2.StripeKey | STRIPE_KEY;
+            Box1.DOCKER_USERNAME | DOCKER_USERNAME;
+            Box1.DOCKER_PASSWORD | DOCKER_PASSWORD;
         # Set continue-on-error to true to allow the workflow to proceed even if this step fails
         continue-on-error: true
           

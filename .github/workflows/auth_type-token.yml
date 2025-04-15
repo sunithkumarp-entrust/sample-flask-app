@@ -22,11 +22,10 @@ jobs:
         with:
           base_url: ${{ secrets.BASE_URL }}
           api_token: ${{ secrets.API_TOKEN }}
-          secret_id: ${{ secrets.SECRET_ID }}
           ca_cert: ${{ secrets.CA_CERT }}
           secrets: |
-            secret.Box1.DOCKER_USERNAME | DOCKER_USERNAME;
-            secret.Box1.DOCKER_PASSWORD | DOCKER_PASSWORD;
+            Box1.DOCKER_USERNAME | DOCKER_USERNAME;
+            Box1.DOCKER_PASSWORD | DOCKER_PASSWORD;
 
       - name: Verify secret was retrieved
         if: steps.fetch-secret.outcome == 'success'
