@@ -25,7 +25,7 @@ jobs:
       
       - name: Fetch secret using username/password authentication
         id: fetch-secret
-        uses: EntrustCorporation/secrets-vault-action@main
+        uses: EntrustCorporation/secrets-vault-action@v1
         with:
           base_url: ${{ secrets.BASE_URL }}
           auth_type: 'userpass'

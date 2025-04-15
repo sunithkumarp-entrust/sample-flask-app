@@ -18,7 +18,7 @@ jobs:
         
       - name: Fetch secret from Secrets vault
         id: fetch-secret
-        uses: EntrustCorporation/secrets-vault-action@main
+        uses: EntrustCorporation/secrets-vault-action@v1
         with:
           base_url: ${{ secrets.BASE_URL }}
           api_token: ${{ secrets.API_TOKEN }}
