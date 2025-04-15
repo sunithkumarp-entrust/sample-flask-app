@@ -7,7 +7,7 @@ on:
       - main
       - master
     paths:
-      - '.github/workflows/secrets-vault-action-token.yml'
+      - '.github/workflows/auth_type-token.yml'
 
 jobs:
   test-vault-action:

@@ -1,4 +1,4 @@
-name: Test PASM Vault Action with UserPass Auth
+name: Test Secret Vault Action with UserPass Auth
 
 on:
   workflow_dispatch:  # Allow manual trigger
@@ -7,7 +7,7 @@ on:
       - main
       - master
     paths:
-      - '.github/workflows/test-pasm-vault-userpass.yml'
+      - '.github/workflows/auth_type-userpass.yml'
 
 jobs:
   test-vault-userpass-auth:
@@ -42,16 +42,6 @@ jobs:
             secret.Box1.DOCKER_PASSWORD | DOCKER_PASSWORD;
         # Set continue-on-error to true to allow the workflow to proceed even if this step fails
         continue-on-error: true
-        
-      - name: Check Authentication Status
-        run: |
-          if [[ "${{ steps.fetch-secret.outcome }}" == "failure" ]]; then
-            echo "::error::Authentication failed. Please check your credentials."
-            echo "Make sure VAULT_USERNAME and VAULT_PASSWORD secrets are configured correctly."
-            echo "Verify that these secrets are set in the repository settings (not in CodeSpaces)."
-            echo "Path: Repository Settings > Secrets and variables > Actions"
-            exit 1
-          fi
           
       - name: Verify secret was retrieved
         if: steps.fetch-secret.outcome == 'success'
