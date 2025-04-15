@@ -88,6 +88,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.AWS_ACCESS_KEY_ID }}/my-flask-app:latest
+          tags: ${{ steps.fetch-secret.outputs.DOCKER_USERNAME }}/my-flask-app:latest
           build-args: |
             EXTERNAL_SECRET=${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}
