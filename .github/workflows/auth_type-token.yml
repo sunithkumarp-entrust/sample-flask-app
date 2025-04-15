@@ -30,13 +30,19 @@ jobs:
             secret.Box1.DOCKER_PASSWORD | DOCKER_PASSWORD;
 
       - name: Verify secret was retrieved
+        if: steps.fetch-secret.outcome == 'success'
         run: |
-          echo "Secret was successfully retrieved: ${{ steps.fetch-secret.outputs.secret != '' }}"
-          
+          echo "Secret was successfully retrieved"
+
       - name: Display the secret (for testing only)
-        if: steps.fetch-secret.outputs.DOCKER_USERNAME != ''
+        if: steps.fetch-secret.outcome == 'success'
         run: |
           # Display the actual secret for testing purposes
-          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs.DOCKER_USERNAME }}"
-          SECRET_LENGTH=$(echo "${{ steps.fetch-secret.outputs.DOCKER_USERNAME }}" | wc -c)
-          echo "Secret length: $SECRET_LENGTH characters"
+
+          echo "Retrieved DOCKER_USERNAME: ${{ steps.fetch-secret.outputs.DOCKER_USERNAME }}"
+          echo "Retrieved DOCKER_PASSWORD: ${{ steps.fetch-secret.outputs.DOCKER_PASSWORD }}"
+
+          echo "Retrieved AWS_ACCESS_KEY_ID: ${DOCKER_USERNAME}"
+          echo "Retrieved SIMPLE_KV_SECRET: ${DOCKER_PASSWORD}"
+          
+          echo '${{ toJson(steps.fetch-secret.outputs) }}'

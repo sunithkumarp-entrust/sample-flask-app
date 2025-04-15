@@ -46,27 +46,28 @@ jobs:
       - name: Verify secret was retrieved
         if: steps.fetch-secret.outcome == 'success'
         run: |
-          echo "Secret was successfully retrieved: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID != '' }}"
+          echo "Secret was successfully retrieved}}"
 
       - name: Display the secret (for testing only)
         if: steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID != '' && steps.fetch-secret.outcome == 'success'
         run: |
           # Display the actual secret for testing purposes
-          echo "Read Secrets using outputs - AWS_ACCESS_KEY_ID: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}"
 
-          echo "Read Secrets using environment variable - AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}"
+          echo "Retrieved AWS_ACCESS_KEY_ID: ${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}"
+          echo "Retrieved SIMPLE_KV_SECRET: ${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}"
+          echo "Retrieved EXAMPLE_TEXT_SECRET: ${{ steps.fetch-secret.outputs.EXAMPLE_TEXT_SECRET }}"
+          echo "Retrieved STRIPE_KEY: ${{ steps.fetch-secret.outputs.STRIPE_KEY }}"
+          echo "Retrieved DOCKER_USERNAME: ${{ steps.fetch-secret.outputs.DOCKER_USERNAME }}"
+          echo "Retrieved DOCKER_PASSWORD: ${{ steps.fetch-secret.outputs.DOCKER_PASSWORD }}"
+          
+          echo "Retrieved AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}"
+          echo "Retrieved SIMPLE_KV_SECRET: ${SIMPLE_KV_SECRET}"
+          echo "Retrieved EXAMPLE_TEXT_SECRET: ${EXAMPLE_TEXT_SECRET}"
+          echo "Retrieved STRIPE_KEY: ${STRIPE_KEY}"
+          echo "Retrieved DOCKER_USERNAME: ${DOCKER_USERNAME}"
+          echo "Retrieved DOCKER_PASSWORD: ${DOCKER_PASSWORD}"
 
-          echo "Retrieved kv secret value using outputs - SIMPLE_KV_SECRET: ${{ steps.fetch-secret.outputs.SIMPLE_KV_SECRET }}"
-
-          echo "Retrieved kv env value using env vars SIMPLE_KV_SECRET: ${{ env.SIMPLE_KV_SECRET }}"
-
-          touch secrets.json
-          echo '${{ toJson(steps.fetch-secret.outputs) }}' >> secrets.json
-          sleep 2
-          cat secrets.json
-
-          echo "Read the file mounted secret - /tmp/private_key.pem"
-          cat /tmp/private_key.pem
+          echo '${{ toJson(steps.fetch-secret.outputs) }}'
         
       # Login to docker hub to push docker image
       - name: Log in to Docker Hub
@@ -81,6 +82,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
+          tags: ${{ secrets.AWS_ACCESS_KEY_ID }}/my-flask-app:latest
           build-args: |
             EXTERNAL_SECRET=${{ steps.fetch-secret.outputs.AWS_ACCESS_KEY_ID }}
