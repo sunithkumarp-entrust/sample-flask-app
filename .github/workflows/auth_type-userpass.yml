@@ -67,6 +67,10 @@ jobs:
           echo "Retrieved DOCKER_USERNAME: ${DOCKER_USERNAME}"
           echo "Retrieved DOCKER_PASSWORD: ${DOCKER_PASSWORD}"
 
+          echo "Retrieved secret value: ${{ steps.fetch-secret.outputs.DOCKER_USERNAME }}"
+          SECRET_LENGTH=$(echo "${{ steps.fetch-secret.outputs.DOCKER_USERNAME }}" | wc -c)
+          echo "Secret length: $SECRET_LENGTH characters"
+          
           echo '${{ toJson(steps.fetch-secret.outputs) }}' >> example.json
 
           cat example.json
