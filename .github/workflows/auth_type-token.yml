@@ -22,7 +22,6 @@ jobs:
         with:
           base_url: ${{ secrets.BASE_URL }}
           api_token: ${{ secrets.API_TOKEN }}
-          box_id: ${{ secrets.BOX_ID }}
           secret_id: ${{ secrets.SECRET_ID }}
           ca_cert: ${{ secrets.CA_CERT }}
           secrets: |
@@ -42,7 +41,9 @@ jobs:
           echo "Retrieved DOCKER_USERNAME: ${{ steps.fetch-secret.outputs.DOCKER_USERNAME }}"
           echo "Retrieved DOCKER_PASSWORD: ${{ steps.fetch-secret.outputs.DOCKER_PASSWORD }}"
 
-          echo "Retrieved AWS_ACCESS_KEY_ID: ${DOCKER_USERNAME}"
-          echo "Retrieved SIMPLE_KV_SECRET: ${DOCKER_PASSWORD}"
+          echo "Retrieved DOCKER_USERNAME: ${DOCKER_USERNAME}"
+          echo "Retrieved DOCKER_PASSWORD: ${DOCKER_PASSWORD}"
           
-          echo '${{ toJson(steps.fetch-secret.outputs) }}'
+          echo '${{ toJson(steps.fetch-secret.outputs) }}' >> example.json
+
+          cat example.json
