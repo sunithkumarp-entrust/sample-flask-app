@@ -67,7 +67,9 @@ jobs:
           echo "Retrieved DOCKER_USERNAME: ${DOCKER_USERNAME}"
           echo "Retrieved DOCKER_PASSWORD: ${DOCKER_PASSWORD}"
 
-          echo '${{ toJson(steps.fetch-secret.outputs) }}'
+          echo '${{ toJson(steps.fetch-secret.outputs) }}' >> example.json
+
+          cat example.json
         
       # Login to docker hub to push docker image
       - name: Log in to Docker Hub
