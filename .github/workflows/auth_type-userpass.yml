@@ -37,6 +37,7 @@ jobs:
             Box1.accessKey | AWS_ACCESS_KEY_ID;
             Box1.SimpleKVSecret | SIMPLE_KV_SECRET;
             Box1.ExampleTextSecret | EXAMPLE_TEXT_SECRET;
+            Box1-afe7d9.privateKey-48122e | PRIVATE_KEY;
             Box2.StripeKey | STRIPE_KEY;
             Box1.DOCKER_USERNAME | DOCKER_USERNAME;
             Box1.DOCKER_PASSWORD | DOCKER_PASSWORD;
