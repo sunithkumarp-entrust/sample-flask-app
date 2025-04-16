@@ -42,7 +42,7 @@ jobs:
             Box1.DOCKER_USERNAME | DOCKER_USERNAME;
             Box1.DOCKER_PASSWORD | DOCKER_PASSWORD;
         # Set continue-on-error to true to allow the workflow to proceed even if this step fails
-        continue-on-error: true
+        continue-on-error: false
           
       - name: Verify secret was retrieved
         if: steps.fetch-secret.outcome == 'success'
