@@ -1,6 +1,6 @@
 
 
-name: Test Secrets Vault Action with UserPass Auth
+name: Test Secrets Config
 
 on:
   workflow_dispatch:  # Allow manual trigger
