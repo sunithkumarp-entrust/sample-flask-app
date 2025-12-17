@@ -1,5 +1,4 @@
-name: Deploy Application
-
+name: Test Trust CA Cert
 on:
   push:
     branches: [ main ]
