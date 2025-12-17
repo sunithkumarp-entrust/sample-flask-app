@@ -1,0 +1,35 @@
+name: Deploy Application
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Your generated configuration will be inserted below
+      - name: Fetch secrets from vault
+        id: fetch-secrets
+        uses: EntrustCorporation/secrets-vault-action@fix-issue-01
+        with:
+          base_url: ${{secrets.VAULT_URL}}
+          auth_type: 'userpass'
+          username: ${{secrets.VAULT_USERNAME}}
+          password: ${{secrets.VAULT_PASSWORD}}
+          vault_uid: 6be657eb-7175-4e17-9182-9b51b1d39b6f
+          tls_verify_skip: true
+          secrets: |
+            Box1.PassSecret | ENTRUST_PASSWORD;
+
+      # Example of how to use the fetched secrets
+      - name: Use secrets
+        run: |
+          echo "Using secrets in your workflow"
+          # Access as environment variables
+          echo "Running with API from $ENTRUST_PASSWORD"
